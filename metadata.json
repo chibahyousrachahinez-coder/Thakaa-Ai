@@ -1,0 +1,6 @@
+{
+  "name": "Thakaa AI Tools Directory",
+  "description": "100+ AI tools compared & reviewed with ROI calculator, AI stack builder, quiz tool finder, and revenue analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
