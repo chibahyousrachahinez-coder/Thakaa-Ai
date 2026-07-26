@@ -51,14 +51,32 @@ export const Header: React.FC<HeaderProps> = ({ theme, onToggleTheme, onOpenPubl
                 <PlusCircle className="w-4 h-4" /> + Write Article / Add Tool
               </button>
             )}
-            <button
-              className="theme-toggle"
-              onClick={onToggleTheme}
-              title="Toggle theme"
-              aria-label="Toggle between dark and light mode"
-            >
-              {theme === 'dark' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
-            </button>
+            <div className="inline-flex items-center p-0.5 rounded-xl bg-slate-900/80 border border-purple-500/30 text-xs">
+              <button
+                onClick={() => { if (theme !== 'dark') onToggleTheme(); }}
+                className={`px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 font-medium transition-all cursor-pointer ${
+                  theme === 'dark'
+                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md font-semibold'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+                title="Primary Mode: Dark Theme"
+              >
+                <Moon className="w-3.5 h-3.5 text-purple-300" />
+                <span>Dark</span>
+              </button>
+              <button
+                onClick={() => { if (theme !== 'light') onToggleTheme(); }}
+                className={`px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 font-medium transition-all cursor-pointer ${
+                  theme === 'light'
+                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md font-semibold'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+                title="Secondary Mode: Light Theme"
+              >
+                <Sun className="w-3.5 h-3.5 text-amber-400" />
+                <span>Light</span>
+              </button>
+            </div>
             <button
               onClick={() => {
                 navigate('/');
