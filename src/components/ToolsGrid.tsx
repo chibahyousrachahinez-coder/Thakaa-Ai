@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Bookmark, Star, ArrowUpRight, Search } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Bookmark, Star, ArrowUpRight, Search, Info } from 'lucide-react';
 import { Tool } from '../types';
 import { Storage, showToast } from '../utils/storage';
 import { ToolLogo } from './ToolLogo';
 import { AdSenseUnit } from './AdSenseUnit';
+import { getToolSlug } from '../utils/slug';
 
 interface ToolsGridProps {
   tools: Tool[];
-  onShowDetails: (tool: Tool) => void;
+  onShowDetails?: (tool: Tool) => void;
   savedToolIds?: number[];
   onToggleBookmark?: (toolId: number) => void;
 }
@@ -18,6 +20,7 @@ export const ToolsGrid: React.FC<ToolsGridProps> = ({
   savedToolIds: externalSavedToolIds,
   onToggleBookmark: externalOnToggleBookmark
 }) => {
+  const navigate = useNavigate();
   const [internalSavedIds, setInternalSavedIds] = useState<number[]>(() => Storage.getSavedTools());
 
   useEffect(() => {
@@ -43,7 +46,8 @@ export const ToolsGrid: React.FC<ToolsGridProps> = ({
 
   const savedIds = externalSavedToolIds || internalSavedIds;
 
-  const handleTryTool = (tool: Tool) => {
+  const handleTryTool = (e: React.MouseEvent, tool: Tool) => {
+    e.stopPropagation();
     Storage.push('affiliateClicks', {
       toolId: tool.id,
       name: tool.name,
@@ -75,68 +79,96 @@ export const ToolsGrid: React.FC<ToolsGridProps> = ({
                 }[tool.pricing] || tool.pricing;
 
                 const priceClass = tool.pricing === 'free' ? 'free' : 'paid';
+                const toolSlug = getToolSlug(tool);
 
                 return (
-                  <div key={tool.id} className="tool-card" data-tool-id={tool.id}>
-                    <div className="tool-card-top">
-                      {tool.featured ? (
-                        <div className="featured-badge" aria-label="Featured tool">
-                          Featured
+                  <div
+                    key={tool.id}
+                    className="tool-card cursor-pointer hover:border-primary transition-all flex flex-col justify-between min-h-[160px] p-5 border rounded-xl bg-surface border-border shadow-sm"
+                    data-tool-id={tool.id}
+                    onClick={() => navigate(`/tools/${toolSlug}`)}
+                  >
+                    <div>
+                      <div className="tool-card-top flex items-center justify-between mb-2">
+                        {tool.featured ? (
+                          <div className="featured-badge" aria-label="Featured tool">
+                            Featured
+                          </div>
+                        ) : (
+                          <div />
+                        )}
+                        <button
+                          className={`bookmark-btn ${isBookmarked ? 'active' : ''}`}
+                          onClick={(e) => handleToggleBookmark(e, tool)}
+                          title={isBookmarked ? 'Remove bookmark' : 'Bookmark tool'}
+                          aria-label={`${isBookmarked ? 'Remove' : 'Save'} ${tool.name} to bookmarks`}
+                        >
+                          <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current text-primary' : ''}`} />
+                        </button>
+                      </div>
+
+                      <div className="tool-header flex items-center gap-3 mb-3">
+                        <ToolLogo name={tool.name} domain={tool.domain} url={tool.url} size={42} />
+                        <div className="tool-info flex flex-col">
+                          <Link
+                            to={`/tools/${toolSlug}`}
+                            className="tool-name font-bold text-base hover:text-primary transition-colors leading-relaxed"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {tool.name}
+                          </Link>
+                          <Link
+                            to={`/category/${tool.category.toLowerCase()}`}
+                            className="tool-category text-xs text-secondary hover:underline capitalize leading-relaxed"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {tool.category}
+                          </Link>
                         </div>
-                      ) : (
-                        <div />
-                      )}
-                      <button
-                        className={`bookmark-btn ${isBookmarked ? 'active' : ''}`}
-                        onClick={(e) => handleToggleBookmark(e, tool)}
-                        title={isBookmarked ? 'Remove bookmark' : 'Bookmark tool'}
-                        aria-label={`${isBookmarked ? 'Remove' : 'Save'} ${tool.name} to bookmarks`}
-                      >
-                        <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current text-primary' : ''}`} />
-                      </button>
+                      </div>
+
+                      <div className="tool-desc text-xs md:text-sm text-secondary leading-relaxed mb-3 line-clamp-2">{tool.desc}</div>
+
+                      <div className="tool-meta flex flex-wrap gap-1.5 mb-3">
+                        <span className={`tool-tag tag-${tool.pricing}`}>{pricingLabel}</span>
+                        {tool.arabic !== 'no' && (
+                          <span className="tool-tag tag-arabic">Arabic</span>
+                        )}
+                        {tool.opensource && (
+                          <span className="tool-tag tag-opensource">Open Source</span>
+                        )}
+                      </div>
                     </div>
 
-                    <div className="tool-header">
-                      <ToolLogo name={tool.name} domain={tool.domain} url={tool.url} size={42} />
-                      <div className="tool-info">
-                        <div className="tool-name">{tool.name}</div>
-                        <div className="tool-category">{tool.category}</div>
+                    <div className="mt-auto pt-3 border-t border-border/60">
+                      <div className="tool-footer flex items-center justify-between mb-3">
+                        <div className="tool-price text-xs font-semibold">
+                          <span className={priceClass}>{tool.price}</span>
+                        </div>
+                        <div className="tool-rating text-xs font-semibold flex items-center gap-1" aria-label={`Rating: ${tool.rating} out of 5`}>
+                          <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400 inline" />
+                          {tool.rating}
+                        </div>
                       </div>
-                    </div>
-                    <div className="tool-desc">{tool.desc}</div>
-                    <div className="tool-meta">
-                      <span className={`tool-tag tag-${tool.pricing}`}>{pricingLabel}</span>
-                      {tool.arabic !== 'no' && (
-                        <span className="tool-tag tag-arabic">Arabic</span>
-                      )}
-                      {tool.opensource && (
-                        <span className="tool-tag tag-opensource">Open Source</span>
-                      )}
-                    </div>
-                    <div className="tool-footer">
-                      <div className="tool-price">
-                        <span className={priceClass}>{tool.price}</span>
+                      <div className="tool-actions flex items-center gap-2">
+                        <a
+                          href={tool.url}
+                          target="_blank"
+                          rel="nofollow sponsored"
+                          className="btn btn-primary flex-1 justify-center py-2 text-xs font-bold"
+                          onClick={(e) => handleTryTool(e, tool)}
+                        >
+                          Visit Site <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
+                        </a>
+                        <Link
+                          to={`/tools/${toolSlug}`}
+                          className="btn btn-ghost px-3 py-2 text-xs font-semibold"
+                          onClick={(e) => e.stopPropagation()}
+                          aria-label={`View details for ${tool.name}`}
+                        >
+                          Specs
+                        </Link>
                       </div>
-                      <div className="tool-rating" aria-label={`Rating: ${tool.rating} out of 5`}>
-                        <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400 inline mr-1" />
-                        {tool.rating}
-                      </div>
-                    </div>
-                    <div className="tool-actions">
-                      <button
-                        className="btn btn-primary"
-                        style={{ flex: 1, justifyContent: 'center' }}
-                        onClick={() => handleTryTool(tool)}
-                      >
-                        Visit Tool <ArrowUpRight className="w-4 h-4 ml-1" />
-                      </button>
-                      <button
-                        className="btn btn-ghost"
-                        onClick={() => onShowDetails(tool)}
-                        aria-label={`View details for ${tool.name}`}
-                      >
-                        Details
-                      </button>
                     </div>
                   </div>
                 );
@@ -151,3 +183,4 @@ export const ToolsGrid: React.FC<ToolsGridProps> = ({
     </section>
   );
 };
+

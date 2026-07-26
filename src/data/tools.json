@@ -1,0 +1,162 @@
+[
+  {
+    "id": "writesonic",
+    "name": "Writesonic",
+    "description": "Boost productivity with AI: content, visuals, insights, and research.",
+    "category": "Writing",
+    "pricing": "Freemium",
+    "url": "https://writesonic.com"
+  },
+  {
+    "id": "copy-ai",
+    "name": "Copy.ai",
+    "description": "AI-driven tool for effortless, high-quality content generation.",
+    "category": "Writing",
+    "pricing": "Freemium",
+    "url": "https://copy.ai"
+  },
+  {
+    "id": "andi",
+    "name": "Andi",
+    "description": "Generative AI-powered search engine that provides direct answers.",
+    "category": "Productivity",
+    "pricing": "Free",
+    "url": "https://andisearch.com"
+  },
+  {
+    "id": "cody",
+    "name": "Cody",
+    "description": "AI assistant transforming business knowledge management.",
+    "category": "Business",
+    "pricing": "Free Trial",
+    "url": "https://meetcody.ai"
+  },
+  {
+    "id": "reimagine-home",
+    "name": "REimagine Home",
+    "description": "Generative AI to redesign any room in seconds.",
+    "category": "Design",
+    "pricing": "Free",
+    "url": "https://reimaginehome.ai"
+  },
+  {
+    "id": "jasper-ai",
+    "name": "Jasper AI",
+    "description": "AI copywriter for marketing teams.",
+    "category": "Writing",
+    "pricing": "Paid",
+    "url": "https://jasper.ai"
+  },
+  {
+    "id": "cursor",
+    "name": "Cursor",
+    "description": "AI-first code editor built for developers.",
+    "category": "Coding",
+    "pricing": "Freemium",
+    "url": "https://cursor.com"
+  },
+  {
+    "id": "elevenlabs",
+    "name": "ElevenLabs",
+    "description": "Realistic AI voice generator and text-to-speech.",
+    "category": "Audio",
+    "pricing": "Freemium",
+    "url": "https://elevenlabs.io"
+  },
+  {
+    "id": "github-copilot",
+    "name": "GitHub Copilot",
+    "description": "Streamline coding with AI's real-time assistance and suggestions.",
+    "category": "Coding",
+    "pricing": "Free Trial",
+    "url": "https://github.com/features/copilot"
+  },
+  {
+    "id": "tabnine",
+    "name": "Tabnine",
+    "description": "Rapid, secure coding with AI-driven personalized suggestions across IDEs.",
+    "category": "Coding",
+    "pricing": "Free Trial",
+    "url": "https://www.tabnine.com"
+  },
+  {
+    "id": "qodo",
+    "name": "Qodo",
+    "description": "Turns PR history into enforceable code standards and testing.",
+    "category": "Coding",
+    "pricing": "Free Trial",
+    "url": "https://www.qodo.ai"
+  },
+  {
+    "id": "windsurf",
+    "name": "Windsurf",
+    "description": "Streamline coding with predictive AI, deployment, and integration.",
+    "category": "Coding",
+    "pricing": "Freemium",
+    "url": "https://codeium.com/windsurf"
+  },
+  {
+    "id": "rok-solution",
+    "name": "ROK Solution",
+    "description": "Streamlines operations with no-code apps and hyperautomation.",
+    "category": "Low-Code",
+    "pricing": "Free Trial",
+    "url": "https://www.roksolution.com"
+  },
+  {
+    "id": "amazon-sagemaker",
+    "name": "Amazon SageMaker",
+    "description": "AI-powered tool for precise, scalable business forecasting.",
+    "category": "Low-Code",
+    "pricing": "Freemium",
+    "url": "https://aws.amazon.com/sagemaker"
+  },
+  {
+    "id": "akkio",
+    "name": "Akkio",
+    "description": "Transform data into predictive power effortlessly, no coding needed.",
+    "category": "Low-Code",
+    "pricing": "Free Trial",
+    "url": "https://www.akkio.com"
+  },
+  {
+    "id": "browse-ai",
+    "name": "Browse AI",
+    "description": "Effortlessly extract and monitor web data without coding.",
+    "category": "Low-Code",
+    "pricing": "Freemium",
+    "url": "https://www.browse.ai"
+  },
+  {
+    "id": "insightbase",
+    "name": "InsightBase",
+    "description": "AI-driven analytics, no-code interface, custom coding options.",
+    "category": "SQL",
+    "pricing": "Freemium",
+    "url": "https://insightbase.ai"
+  },
+  {
+    "id": "blaze-sql",
+    "name": "Blaze SQL",
+    "description": "Revolutionize data analytics with AI-driven, no-code SQL query generation.",
+    "category": "SQL",
+    "pricing": "Paid",
+    "url": "https://www.blazesql.com"
+  },
+  {
+    "id": "ai2sql",
+    "name": "AI2sql",
+    "description": "Transforms natural language into SQL queries effortlessly.",
+    "category": "SQL",
+    "pricing": "Freemium",
+    "url": "https://www.ai2sql.io"
+  },
+  {
+    "id": "oss-insight",
+    "name": "OSS Insight",
+    "description": "Unleash GitHub data insights with AI-powered SQL and real-time analytics.",
+    "category": "SQL",
+    "pricing": "Free",
+    "url": "https://ossinsight.io"
+  }
+]

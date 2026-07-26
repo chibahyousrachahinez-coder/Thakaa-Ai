@@ -31,6 +31,9 @@ export const ArticleView: React.FC<ArticleViewProps> = ({ articleId, onBack, onN
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  const customArticles = Storage.get<any[]>('customArticles', []);
+  const foundCustomArticle = customArticles.find((a) => a.articleId === articleId);
+
   return (
     <section className="article-page active py-8" id={articleId}>
       <div className="container max-w-4xl mx-auto">
@@ -41,6 +44,329 @@ export const ArticleView: React.FC<ArticleViewProps> = ({ articleId, onBack, onN
         >
           <ArrowLeft className="w-4 h-4" /> Back to Technical Guides
         </button>
+
+        {/* CUSTOM PUBLISHED ARTICLE */}
+        {foundCustomArticle ? (
+          <article className="article-wrapper">
+            <div className="article-header text-center mb-8">
+              <div className="article-meta flex items-center justify-center gap-4 text-xs text-slate-400 mb-3">
+                <span className="inline-flex items-center gap-1">
+                  <Calendar className="w-3.5 h-3.5 text-blue-400" /> {foundCustomArticle.date || 'July 2026'}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-amber-400" /> {foundCustomArticle.readTime || '8 min read'}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <User className="w-3.5 h-3.5 text-purple-400" /> Verified Editorial Board
+                </span>
+              </div>
+              <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight mb-4 leading-tight">
+                {foundCustomArticle.title}
+              </h1>
+              <p className="text-sm md:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                {foundCustomArticle.desc}
+              </p>
+            </div>
+
+            {foundCustomArticle.thumbnail && (
+              <div className="mb-8 rounded-2xl overflow-hidden border border-slate-800 max-h-[400px]">
+                <img
+                  src={foundCustomArticle.thumbnail}
+                  alt={foundCustomArticle.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+
+            <div className="article-content space-y-6 text-sm md:text-base text-slate-300 leading-relaxed bg-slate-900/60 p-6 md:p-8 rounded-2xl border border-slate-800">
+              <div className="whitespace-pre-wrap font-sans text-slate-200">
+                {foundCustomArticle.content || foundCustomArticle.desc}
+              </div>
+
+              <AdSenseUnit slotId="custom-article-banner" format="horizontal" className="my-6" />
+
+              <div className="flex items-center justify-between pt-6 border-t border-slate-800 text-xs text-slate-400">
+                <span>Share this technical guide:</span>
+                <div className="flex items-center gap-2">
+                  <button onClick={() => handleShare('twitter')} className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300" aria-label="Share on Twitter"><Twitter className="w-4 h-4" /></button>
+                  <button onClick={() => handleShare('linkedin')} className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300" aria-label="Share on LinkedIn"><Linkedin className="w-4 h-4" /></button>
+                  <button onClick={() => handleShare('copy')} className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300" aria-label="Copy link"><Copy className="w-4 h-4" /></button>
+                </div>
+              </div>
+            </div>
+          </article>
+        ) : (
+          <>
+            {/* ARTICLE 0: Best Free & Cheap Alternatives to Jasper AI in 2026 */}
+            {articleId === 'article-jasper-alternatives' && (
+          <article className="article-wrapper">
+            <div className="article-header text-center mb-8">
+              <div className="article-meta flex items-center justify-center gap-4 text-xs text-slate-400 mb-3">
+                <span className="inline-flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-blue-400" /> July 2026</span>
+                <span className="inline-flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-amber-400" /> 10 min read</span>
+                <span className="inline-flex items-center gap-1"><User className="w-3.5 h-3.5 text-purple-400" /> Senior Technical SEO Strategist</span>
+              </div>
+              <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight mb-4 leading-tight">
+                Best Free & Cheap Alternatives to Jasper AI in 2026
+              </h1>
+              <p className="text-sm md:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                An objective, benchmarked guide for marketers, copywriters, and founders looking for high-performance AI writing tools without Jasper's $49/mo minimum price tag.
+              </p>
+            </div>
+
+            <div className="article-content space-y-8 text-sm md:text-base text-slate-300 leading-relaxed">
+              {/* Quick-Answer Box (Featured Snippet Candidate) */}
+              <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 to-blue-950/40 border border-emerald-500/40 my-6 shadow-lg">
+                <div className="text-xs uppercase tracking-wider font-extrabold text-emerald-400 mb-1 flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4" /> Quick Answer / Direct Verdict
+                </div>
+                <p className="text-sm md:text-base font-medium text-white leading-relaxed">
+                  The absolute best free alternative to Jasper AI in 2026 is <strong>Claude 3.5 Sonnet (via Claude.ai)</strong> for long-form brand copy and nuanced writing, while <strong>Copy.ai</strong> is the best budget direct alternative with a permanent free tier and built-in marketing automation workflows starting at $0/month.
+                </p>
+              </div>
+
+              {/* Comparison Table */}
+              <h2 className="text-xl font-bold text-white border-b border-slate-800 pb-2">
+                1. Jasper AI Alternatives Snapshot Comparison
+              </h2>
+              <div className="overflow-x-auto my-4 border border-slate-800 rounded-xl shadow-lg">
+                <table className="w-full text-xs md:text-sm text-left text-slate-300 border-collapse">
+                  <thead className="bg-slate-900 text-white font-semibold border-b border-slate-800">
+                    <tr>
+                      <th className="p-4 align-middle whitespace-nowrap">Alternative Name</th>
+                      <th className="p-4 align-middle whitespace-nowrap">Price / Free Tier</th>
+                      <th className="p-4 align-middle whitespace-nowrap">Best For</th>
+                      <th className="p-4 align-middle whitespace-nowrap">Rating</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-800 bg-slate-950/60">
+                    <tr className="hover:bg-slate-900/50">
+                      <td className="p-4 align-middle whitespace-nowrap font-bold text-white">Copy.ai</td>
+                      <td className="p-4 align-middle whitespace-nowrap text-emerald-400 font-mono">Free Tier / $36 mo</td>
+                      <td className="p-4 align-middle whitespace-nowrap">GTM Workflows, Cold Emails & Ad Copy</td>
+                      <td className="p-4 align-middle whitespace-nowrap font-semibold text-amber-400">4.7 / 5.0</td>
+                    </tr>
+                    <tr className="hover:bg-slate-900/50">
+                      <td className="p-4 align-middle whitespace-nowrap font-bold text-white">Claude 3.5 Sonnet</td>
+                      <td className="p-4 align-middle whitespace-nowrap text-emerald-400 font-mono">Free Tier / $20 mo</td>
+                      <td className="p-4 align-middle whitespace-nowrap">Nuanced Brand Tone & Long-Form Articles</td>
+                      <td className="p-4 align-middle whitespace-nowrap font-semibold text-amber-400">4.9 / 5.0</td>
+                    </tr>
+                    <tr className="hover:bg-slate-900/50">
+                      <td className="p-4 align-middle whitespace-nowrap font-bold text-white">Writesonic</td>
+                      <td className="p-4 align-middle whitespace-nowrap text-emerald-400 font-mono">Free Trial / $12 mo</td>
+                      <td className="p-4 align-middle whitespace-nowrap">Fact-Checked SEO Blog Posts & Web Search</td>
+                      <td className="p-4 align-middle whitespace-nowrap font-semibold text-amber-400">4.5 / 5.0</td>
+                    </tr>
+                    <tr className="hover:bg-slate-900/50">
+                      <td className="p-4 align-middle whitespace-nowrap font-bold text-white">Rytr</td>
+                      <td className="p-4 align-middle whitespace-nowrap text-emerald-400 font-mono">Free Tier / $9 mo</td>
+                      <td className="p-4 align-middle whitespace-nowrap">Ultra-Budget Short-Form Copy & Emails</td>
+                      <td className="p-4 align-middle whitespace-nowrap font-semibold text-amber-400">4.4 / 5.0</td>
+                    </tr>
+                    <tr className="hover:bg-slate-900/50">
+                      <td className="p-4 align-middle whitespace-nowrap font-bold text-white">ChatGPT Plus (GPT-4o)</td>
+                      <td className="p-4 align-middle whitespace-nowrap text-emerald-400 font-mono">Free Tier / $20 mo</td>
+                      <td className="p-4 align-middle whitespace-nowrap">Multimodal Research & Custom GPT Agents</td>
+                      <td className="p-4 align-middle whitespace-nowrap font-semibold text-amber-400">4.8 / 5.0</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Detailed Tool Breakdown */}
+              <h2 className="text-xl font-bold text-white border-b border-slate-800 pb-2">
+                2. Deep Breakdown of Top 5 Jasper AI Alternatives
+              </h2>
+
+              <div className="space-y-6">
+                {/* 1. Copy.ai */}
+                <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800">
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <h3 className="text-lg font-bold text-white">1. Copy.ai — Best Direct Alternative for Marketing Teams</h3>
+                    <span className="text-xs px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 font-mono border border-emerald-500/20">
+                      Free Plan Available
+                    </span>
+                  </div>
+                  <ul className="space-y-2 text-xs md:text-sm text-slate-300 mb-4">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                      <span><strong>What it does well:</strong> Provides 90+ built-in copywriting templates, multi-step marketing automation OS, team collaboration spaces, and custom brand voices without locking features behind $49/mo plans.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <XCircle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                      <span><strong>What it's missing compared to Jasper:</strong> Lacks direct native Integration with Surfer SEO for real-time keyword density optimization inside the main text editor.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Sparkles className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                      <span><strong>Who it is best for:</strong> Growth marketers, social media agencies, and outbound sales teams creating multi-channel campaigns on a budget.</span>
+                    </li>
+                  </ul>
+                  <button
+                    onClick={() => trackAffiliate('copy-ai', 'https://copy.ai')}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-colors"
+                  >
+                    Try Copy.ai Free <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {/* 2. Claude 3.5 Sonnet */}
+                <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800">
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <h3 className="text-lg font-bold text-white">2. Claude 3.5 Sonnet — Best for Human-Sounding Quality</h3>
+                    <span className="text-xs px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 font-mono border border-emerald-500/20">
+                      Free Tier / $20mo Pro
+                    </span>
+                  </div>
+                  <ul className="space-y-2 text-xs md:text-sm text-slate-300 mb-4">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                      <span><strong>What it does well:</strong> Outperforms Jasper's raw outputs in writing rhythm, natural vocabulary, complex editorial style matching, and long-form document synthesis (200K token context window).</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <XCircle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                      <span><strong>What it's missing compared to Jasper:</strong> No pre-packaged "recipe" buttons or automatic image generator add-ons — requires prompting skills.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Sparkles className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                      <span><strong>Who it is best for:</strong> Freelance writers, blog managers, and agency copywriters who want top-tier editorial prose without robotic repetitive fluff.</span>
+                    </li>
+                  </ul>
+                  <button
+                    onClick={() => trackAffiliate('claude', 'https://claude.ai')}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-colors"
+                  >
+                    Try Claude Free <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {/* 3. Writesonic */}
+                <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800">
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <h3 className="text-lg font-bold text-white">3. Writesonic — Best for SEO Bloggers & Live Web Search</h3>
+                    <span className="text-xs px-2.5 py-1 rounded bg-blue-500/10 text-blue-400 font-mono border border-blue-500/20">
+                      From $12/mo
+                    </span>
+                  </div>
+                  <ul className="space-y-2 text-xs md:text-sm text-slate-300 mb-4">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                      <span><strong>What it does well:</strong> Article Writer 6.0 generates long SEO-optimized articles backed by real-time Google search indexing, competitor research, and built-in SEO scoring at a fraction of Jasper's cost.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <XCircle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                      <span><strong>What it's missing compared to Jasper:</strong> Enterprise-grade security compliance features and extensive multi-user seat administration.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Sparkles className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                      <span><strong>Who it is best for:</strong> Niche site publishers, affiliate marketers, and SEO specialists who require real-time web references in generated content.</span>
+                    </li>
+                  </ul>
+                  <button
+                    onClick={() => trackAffiliate('writesonic', 'https://writesonic.com')}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-colors"
+                  >
+                    Try Writesonic <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {/* 4. Rytr */}
+                <div className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800">
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <h3 className="text-lg font-bold text-white">4. Rytr — Best Ultra-Budget Option ($9/mo)</h3>
+                    <span className="text-xs px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 font-mono border border-emerald-500/20">
+                      Free Plan / $9mo Unlimited
+                    </span>
+                  </div>
+                  <ul className="space-y-2 text-xs md:text-sm text-slate-300 mb-4">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                      <span><strong>What it does well:</strong> Unbeatable value at $9/month for unlimited character generation, clean inline document editor, built-in plagiarism checking, and 40+ use-case templates.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <XCircle className="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" />
+                      <span><strong>What it's missing compared to Jasper:</strong> Less sophisticated long-form reasoning; best for short bursts of text rather than 3,000-word guides.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Sparkles className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                      <span><strong>Who it is best for:</strong> Solo founders, students, and budget-conscious creators needing quick product descriptions, emails, and social captions.</span>
+                    </li>
+                  </ul>
+                  <button
+                    onClick={() => trackAffiliate('rytr', 'https://rytr.me')}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-colors"
+                  >
+                    Try Rytr Free <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Decision Guide Section */}
+              <h2 className="text-xl font-bold text-white border-b border-slate-800 pb-2">
+                3. Which One Should You Actually Pick? (Persona Guide)
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                  <h4 className="font-bold text-white text-sm mb-2 text-emerald-400">If your budget is $0/month:</h4>
+                  <p className="text-xs text-slate-300">
+                    Use <strong>Claude 3.5 Sonnet</strong> for long articles and <strong>Copy.ai Free Plan</strong> for short marketing copy and templates.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                  <h4 className="font-bold text-white text-sm mb-2 text-blue-400">If you want an all-in-one SEO writing machine ($12-20/mo):</h4>
+                  <p className="text-xs text-slate-300">
+                    Choose <strong>Writesonic</strong> for live web research and structured article generation.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                  <h4 className="font-bold text-white text-sm mb-2 text-amber-400">If you manage a marketing team or agency:</h4>
+                  <p className="text-xs text-slate-300">
+                    Switch to <strong>Copy.ai Pro</strong> — it saves $13/user/month compared to Jasper while providing superior automated workflows.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+                  <h4 className="font-bold text-white text-sm mb-2 text-purple-400">If you want the cheapest unlimited plan:</h4>
+                  <p className="text-xs text-slate-300">
+                    Pick <strong>Rytr</strong> at $9/month for unlimited word generation across 30+ languages.
+                  </p>
+                </div>
+              </div>
+
+              {/* Internal Links Section */}
+              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 my-8 text-center">
+                <h3 className="text-base font-bold text-white mb-2">Explore Related AI Directories & Benchmark Hubs</h3>
+                <p className="text-xs text-slate-400 mb-4">Discover verified software stacks and compare leading tools on Thakaa AI</p>
+                <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
+                  <a href="/category/writing" className="px-3 py-1.5 rounded-lg bg-slate-800 text-blue-400 hover:underline">
+                    Writing & Copywriting Tools Index
+                  </a>
+                  <a href="/comparisons" className="px-3 py-1.5 rounded-lg bg-slate-800 text-blue-400 hover:underline">
+                    Side-by-Side Comparison Matrix
+                  </a>
+                  <a href="/stack/creator" className="px-3 py-1.5 rounded-lg bg-slate-800 text-blue-400 hover:underline">
+                    Content Creator Niche Stack
+                  </a>
+                  <a href="/quiz" className="px-3 py-1.5 rounded-lg bg-slate-800 text-blue-400 hover:underline">
+                    Interactive AI Tool Finder Quiz
+                  </a>
+                </div>
+              </div>
+
+              {/* Share & Feedback */}
+              <div className="flex items-center justify-between pt-6 border-t border-slate-800 text-xs text-slate-400">
+                <span>Share this benchmark guide:</span>
+                <div className="flex items-center gap-2">
+                  <button onClick={() => handleShare('twitter')} className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300" aria-label="Share on Twitter"><Twitter className="w-4 h-4" /></button>
+                  <button onClick={() => handleShare('linkedin')} className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300" aria-label="Share on LinkedIn"><Linkedin className="w-4 h-4" /></button>
+                  <button onClick={() => handleShare('copy')} className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300" aria-label="Copy link"><Copy className="w-4 h-4" /></button>
+                </div>
+              </div>
+            </div>
+          </article>
+        )}
 
         {/* ARTICLE 1: ChatGPT vs Claude Free Tier Benchmark */}
         {(articleId === 'article-free-writing' || articleId === 'article-seo-tools') && (
@@ -321,6 +647,8 @@ export const ArticleView: React.FC<ArticleViewProps> = ({ articleId, onBack, onN
               </div>
             </div>
           </article>
+        )}
+        </>
         )}
       </div>
     </section>

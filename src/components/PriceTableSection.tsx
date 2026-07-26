@@ -23,129 +23,129 @@ export const PriceTableSection: React.FC = () => {
         </div>
         <p>Comprehensive breakdown of pricing tiers, free quotas, and subscription costs</p>
         <div className="price-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Platform</th>
-                <th>Free Tier Access</th>
-                <th>Paid Tier</th>
-                <th>Primary Use Case</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="best-value">
-                <td>
-                  <div className="tool-cell">
-                    <ToolLogo name="ChatGPT" domain="openai.com" size={32} />
-                    <div>
-                      <span className="t-name">ChatGPT</span>
-                      <span className="t-domain">OpenAI</span>
+            <table className="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr className="border-b border-slate-800 bg-slate-900/80 text-slate-300 font-semibold">
+                  <th className="p-4 align-middle whitespace-nowrap">Platform</th>
+                  <th className="p-4 align-middle whitespace-nowrap">Free Tier Access</th>
+                  <th className="p-4 align-middle whitespace-nowrap">Paid Tier</th>
+                  <th className="p-4 align-middle whitespace-nowrap">Primary Use Case</th>
+                  <th className="p-4 align-middle whitespace-nowrap text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-800/80 text-slate-200">
+                <tr className="best-value hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 align-middle whitespace-nowrap">
+                    <div className="flex items-center gap-3">
+                      <ToolLogo name="ChatGPT" domain="openai.com" size={32} className="w-8 h-8 rounded-full object-contain flex-shrink-0" />
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-white leading-tight">ChatGPT</span>
+                        <span className="text-xs text-slate-400 leading-tight">OpenAI</span>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td className="price-cell"><span className="free">Available</span></td>
-                <td className="price-cell"><span className="paid">$20 / mo</span></td>
-                <td>General AI & Coding</td>
-                <td className="cta-cell">
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handleTrackClick('chatgpt-price-table', 'https://chat.openai.com')}
-                  >
-                    Visit <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="tool-cell">
-                    <ToolLogo name="Claude" domain="anthropic.com" size={32} />
-                    <div>
-                      <span className="t-name">Claude</span>
-                      <span className="t-domain">Anthropic</span>
+                  </td>
+                  <td className="p-4 align-middle whitespace-nowrap"><span className="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 font-medium text-xs border border-emerald-500/20">Available</span></td>
+                  <td className="p-4 align-middle whitespace-nowrap font-mono text-slate-300">$20 / mo</td>
+                  <td className="p-4 align-middle whitespace-nowrap text-slate-300">General AI & Coding</td>
+                  <td className="p-4 align-middle whitespace-nowrap text-right">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => handleTrackClick('chatgpt-price-table', 'https://chat.openai.com')}
+                    >
+                      Visit <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
+                    </button>
+                  </td>
+                </tr>
+                <tr className="hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 align-middle whitespace-nowrap">
+                    <div className="flex items-center gap-3">
+                      <ToolLogo name="Claude" domain="anthropic.com" size={32} className="w-8 h-8 rounded-full object-contain flex-shrink-0" />
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-white leading-tight">Claude</span>
+                        <span className="text-xs text-slate-400 leading-tight">Anthropic</span>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td className="price-cell"><span className="free">Available</span></td>
-                <td className="price-cell"><span className="paid">$20 / mo</span></td>
-                <td>Long Documents & Analysis</td>
-                <td className="cta-cell">
-                  <button
-                    className="btn btn-ghost"
-                    onClick={() => handleTrackClick('claude-price-table', 'https://claude.ai')}
-                  >
-                    Visit <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="tool-cell">
-                    <ToolLogo name="Jasper AI" domain="jasper.ai" size={32} />
-                    <div>
-                      <span className="t-name">Jasper AI</span>
-                      <span className="t-domain">Jasper</span>
+                  </td>
+                  <td className="p-4 align-middle whitespace-nowrap"><span className="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 font-medium text-xs border border-emerald-500/20">Available</span></td>
+                  <td className="p-4 align-middle whitespace-nowrap font-mono text-slate-300">$20 / mo</td>
+                  <td className="p-4 align-middle whitespace-nowrap text-slate-300">Long Documents & Analysis</td>
+                  <td className="p-4 align-middle whitespace-nowrap text-right">
+                    <button
+                      className="btn btn-ghost"
+                      onClick={() => handleTrackClick('claude-price-table', 'https://claude.ai')}
+                    >
+                      Visit <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
+                    </button>
+                  </td>
+                </tr>
+                <tr className="hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 align-middle whitespace-nowrap">
+                    <div className="flex items-center gap-3">
+                      <ToolLogo name="Jasper AI" domain="jasper.ai" size={32} className="w-8 h-8 rounded-full object-contain flex-shrink-0" />
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-white leading-tight">Jasper AI</span>
+                        <span className="text-xs text-slate-400 leading-tight">Jasper</span>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td className="price-cell"><span className="paid">Trial Only</span></td>
-                <td className="price-cell"><span className="paid">$49 / mo</span></td>
-                <td>Enterprise Marketing</td>
-                <td className="cta-cell">
-                  <button
-                    className="btn btn-ghost"
-                    onClick={() => handleTrackClick('jasper-price-table', 'https://jasper.ai')}
-                  >
-                    Visit <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="tool-cell">
-                    <ToolLogo name="Copy.ai" domain="copy.ai" size={32} />
-                    <div>
-                      <span className="t-name">Copy.ai</span>
-                      <span className="t-domain">Copy.ai</span>
+                  </td>
+                  <td className="p-4 align-middle whitespace-nowrap"><span className="px-2.5 py-1 rounded-md bg-rose-500/10 text-rose-400 font-medium text-xs border border-rose-500/20">Trial Only</span></td>
+                  <td className="p-4 align-middle whitespace-nowrap font-mono text-slate-300">$49 / mo</td>
+                  <td className="p-4 align-middle whitespace-nowrap text-slate-300">Enterprise Marketing</td>
+                  <td className="p-4 align-middle whitespace-nowrap text-right">
+                    <button
+                      className="btn btn-ghost"
+                      onClick={() => handleTrackClick('jasper-price-table', 'https://jasper.ai')}
+                    >
+                      Visit <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
+                    </button>
+                  </td>
+                </tr>
+                <tr className="hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 align-middle whitespace-nowrap">
+                    <div className="flex items-center gap-3">
+                      <ToolLogo name="Copy.ai" domain="copy.ai" size={32} className="w-8 h-8 rounded-full object-contain flex-shrink-0" />
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-white leading-tight">Copy.ai</span>
+                        <span className="text-xs text-slate-400 leading-tight">Copy.ai</span>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td className="price-cell"><span className="free">2,000 words/mo</span></td>
-                <td className="price-cell"><span className="paid">$36 / mo</span></td>
-                <td>Outbound Content</td>
-                <td className="cta-cell">
-                  <button
-                    className="btn btn-ghost"
-                    onClick={() => handleTrackClick('copyai-price-table', 'https://copy.ai')}
-                  >
-                    Visit <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="tool-cell">
-                    <ToolLogo name="Writesonic" domain="writesonic.com" size={32} />
-                    <div>
-                      <span className="t-name">Writesonic</span>
-                      <span className="t-domain">Writesonic</span>
+                  </td>
+                  <td className="p-4 align-middle whitespace-nowrap"><span className="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 font-medium text-xs border border-emerald-500/20">2,000 words/mo</span></td>
+                  <td className="p-4 align-middle whitespace-nowrap font-mono text-slate-300">$36 / mo</td>
+                  <td className="p-4 align-middle whitespace-nowrap text-slate-300">Outbound Content</td>
+                  <td className="p-4 align-middle whitespace-nowrap text-right">
+                    <button
+                      className="btn btn-ghost"
+                      onClick={() => handleTrackClick('copyai-price-table', 'https://copy.ai')}
+                    >
+                      Visit <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
+                    </button>
+                  </td>
+                </tr>
+                <tr className="hover:bg-slate-800/40 transition-colors">
+                  <td className="p-4 align-middle whitespace-nowrap">
+                    <div className="flex items-center gap-3">
+                      <ToolLogo name="Writesonic" domain="writesonic.com" size={32} className="w-8 h-8 rounded-full object-contain flex-shrink-0" />
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-white leading-tight">Writesonic</span>
+                        <span className="text-xs text-slate-400 leading-tight">Writesonic</span>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td className="price-cell"><span className="free">10,000 words/mo</span></td>
-                <td className="price-cell"><span className="paid">$13 / mo</span></td>
-                <td>SEO Copywriting</td>
-                <td className="cta-cell">
-                  <button
-                    className="btn btn-ghost"
-                    onClick={() => handleTrackClick('writesonic-price-table', 'https://writesonic.com')}
-                  >
-                    Visit <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                  <td className="p-4 align-middle whitespace-nowrap"><span className="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 font-medium text-xs border border-emerald-500/20">10,000 words/mo</span></td>
+                  <td className="p-4 align-middle whitespace-nowrap font-mono text-slate-300">$13 / mo</td>
+                  <td className="p-4 align-middle whitespace-nowrap text-slate-300">SEO Copywriting</td>
+                  <td className="p-4 align-middle whitespace-nowrap text-right">
+                    <button
+                      className="btn btn-ghost"
+                      onClick={() => handleTrackClick('writesonic-price-table', 'https://writesonic.com')}
+                    >
+                      Visit <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
         </div>
       </div>
     </section>

@@ -265,37 +265,37 @@ export const LegalPages: React.FC<LegalPagesProps> = ({ type, onBackHome }) => {
 
       {/* CONTACT US PAGE */}
       {type === 'contact' && (
-        <article className="rounded-2xl p-6 md:p-10 border border-slate-800 bg-slate-900/40 backdrop-blur-sm">
+        <article className="rounded-2xl p-8 bg-slate-900 text-white shadow-xl border border-slate-800">
           <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
             <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               <Mail className="w-6 h-6" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white mb-0">Contact & Support</h1>
-              <p className="text-xs text-slate-400 mt-1">Get in touch with the Thakaa AI directory team</p>
+              <h1 className="text-2xl font-bold text-white mb-1">Contact & Support</h1>
+              <p className="text-slate-300 text-sm">Have a question? Send us a direct message.</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="space-y-4">
-              <div className="p-5 rounded-xl bg-slate-900 border border-slate-800">
+              <div className="p-5 rounded-xl bg-slate-800/80 border border-slate-700">
                 <h3 className="font-bold text-white text-base mb-2">Direct Communications</h3>
-                <p className="text-xs text-slate-400 mb-3">
+                <p className="text-xs text-slate-300 mb-3">
                   Have a question about a software listing, advertising inquiry, or press question? Send us a direct message.
                 </p>
                 <div className="space-y-2 text-xs">
-                  <div className="text-slate-300">
-                    <strong className="text-slate-400">Support Email:</strong><br />
-                    <a href="mailto:support@thakaa.ai" className="text-blue-400 hover:underline">support@thakaa.ai</a>
+                  <div className="text-slate-200">
+                    <strong className="text-slate-300">Support Email:</strong><br />
+                    <a href="mailto:support@thakaa.ai" className="text-blue-400 hover:underline font-mono">support@thakaa.ai</a>
                   </div>
-                  <div className="text-slate-300">
-                    <strong className="text-slate-400">Partnership Desk:</strong><br />
-                    <a href="mailto:partners@thakaa.ai" className="text-blue-400 hover:underline">partners@thakaa.ai</a>
+                  <div className="text-slate-200">
+                    <strong className="text-slate-300">Partnership Desk:</strong><br />
+                    <a href="mailto:partners@thakaa.ai" className="text-blue-400 hover:underline font-mono">partners@thakaa.ai</a>
                   </div>
                 </div>
               </div>
 
-              <div className="p-5 rounded-xl bg-slate-900/60 border border-slate-800/80 text-xs text-slate-400">
+              <div className="p-5 rounded-xl bg-slate-800/40 border border-slate-700/80 text-xs text-slate-300">
                 <strong className="text-white block mb-1">Response Time Guarantee:</strong>
                 Our team reviews inquiries Monday through Friday and typically responds within 24–48 business hours.
               </div>
@@ -303,11 +303,11 @@ export const LegalPages: React.FC<LegalPagesProps> = ({ type, onBackHome }) => {
 
             <div className="lg:col-span-2">
               {formSubmitted ? (
-                <div className="p-8 rounded-xl bg-slate-900/90 border border-emerald-500/30 text-center flex flex-col items-center justify-center">
-                  <CheckCircle2 className="w-12 h-12 text-emerald-500 mb-3 animate-bounce" />
+                <div className="p-8 rounded-2xl bg-slate-800 border border-emerald-500/40 text-center flex flex-col items-center justify-center">
+                  <CheckCircle2 className="w-12 h-12 text-emerald-400 mb-3 animate-bounce" />
                   <h3 className="text-xl font-bold text-white mb-2">Message Sent Successfully!</h3>
                   <p className="text-sm text-slate-300 max-w-md mb-6">
-                    Thank you for reaching out to Thakaa AI. Your inquiry has been logged and assigned ticket reference <span className="font-mono text-emerald-400">#TK-{Math.floor(1000 + Math.random() * 9000)}</span>.
+                    Thank you for reaching out to Thakaa AI. Your inquiry has been logged and assigned ticket reference <span className="font-mono text-emerald-400 font-bold">#TK-{Math.floor(1000 + Math.random() * 9000)}</span>.
                   </p>
                   <button
                     onClick={() => {
@@ -316,7 +316,7 @@ export const LegalPages: React.FC<LegalPagesProps> = ({ type, onBackHome }) => {
                       setContactEmail('');
                       setMessage('');
                     }}
-                    className="px-4 py-2 rounded-lg bg-slate-800 text-slate-200 hover:text-white text-xs font-semibold"
+                    className="px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition-colors"
                   >
                     Send Another Message
                   </button>
@@ -325,13 +325,13 @@ export const LegalPages: React.FC<LegalPagesProps> = ({ type, onBackHome }) => {
                 <form onSubmit={handleContactSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">
-                        Full Name <span className="text-rose-500">*</span>
+                      <label className="block text-xs font-semibold text-white mb-1.5">
+                        Full Name <span className="text-rose-400">*</span>
                       </label>
                       <input
                         type="text"
                         required
-                        className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-sm text-white focus:border-blue-500 outline-none"
+                        className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-400 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="John Doe"
                         value={contactName}
                         onChange={(e) => setContactName(e.target.value)}
@@ -340,13 +340,13 @@ export const LegalPages: React.FC<LegalPagesProps> = ({ type, onBackHome }) => {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-slate-300 mb-1">
-                        Email Address <span className="text-rose-500">*</span>
+                      <label className="block text-xs font-semibold text-white mb-1.5">
+                        Email Address <span className="text-rose-400">*</span>
                       </label>
                       <input
                         type="email"
                         required
-                        className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-sm text-white focus:border-blue-500 outline-none"
+                        className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-400 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="john@company.com"
                         value={contactEmail}
                         onChange={(e) => setContactEmail(e.target.value)}
@@ -356,30 +356,30 @@ export const LegalPages: React.FC<LegalPagesProps> = ({ type, onBackHome }) => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    <label className="block text-xs font-semibold text-white mb-1.5">
                       Inquiry Category
                     </label>
                     <select
-                      className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-sm text-white focus:border-blue-500 outline-none"
+                      className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-400 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
                       disabled={isSubmitting}
                     >
-                      <option value="general">General Inquiry</option>
-                      <option value="listing">Software Listing / Update Request</option>
-                      <option value="partnership">Sponsorship & AdSense Partnership</option>
-                      <option value="bug">Technical Bug / Feedback</option>
+                      <option value="general" className="bg-slate-800 text-white">General Inquiry</option>
+                      <option value="listing" className="bg-slate-800 text-white">Software Listing / Update Request</option>
+                      <option value="partnership" className="bg-slate-800 text-white">Sponsorship & AdSense Partnership</option>
+                      <option value="bug" className="bg-slate-800 text-white">Technical Bug / Feedback</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">
-                      Message <span className="text-rose-500">*</span>
+                    <label className="block text-xs font-semibold text-white mb-1.5">
+                      Message <span className="text-rose-400">*</span>
                     </label>
                     <textarea
                       rows={5}
                       required
-                      className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-sm text-white focus:border-blue-500 outline-none resize-none"
+                      className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-400 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
                       placeholder="Please describe your question or inquiry in detail..."
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
@@ -388,13 +388,13 @@ export const LegalPages: React.FC<LegalPagesProps> = ({ type, onBackHome }) => {
                   </div>
 
                   {errorMsg && (
-                    <p className="text-xs text-rose-500 font-medium">{errorMsg}</p>
+                    <p className="text-xs text-rose-400 font-medium">{errorMsg}</p>
                   )}
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition-colors flex items-center justify-center gap-2"
+                    className="w-full sm:w-auto px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-lg shadow-blue-900/30"
                   >
                     <Send className="w-4 h-4" />
                     {isSubmitting ? 'Sending Message...' : 'Submit Inquiry'}
