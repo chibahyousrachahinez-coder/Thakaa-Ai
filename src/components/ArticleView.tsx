@@ -1,7 +1,6 @@
 import React from 'react';
 import { ArrowLeft, Calendar, Clock, User, Share2, Twitter, Linkedin, Copy, ArrowUpRight, CheckCircle2, XCircle, AlertTriangle, Sparkles, BookOpen } from 'lucide-react';
 import { showToast, Storage } from '../utils/storage';
-import { AdSenseUnit } from './AdSenseUnit';
 
 interface ArticleViewProps {
   articleId: string;
@@ -82,8 +81,6 @@ export const ArticleView: React.FC<ArticleViewProps> = ({ articleId, onBack, onN
               <div className="whitespace-pre-wrap font-sans text-slate-200">
                 {foundCustomArticle.content || foundCustomArticle.desc}
               </div>
-
-              <AdSenseUnit slotId="custom-article-banner" format="horizontal" className="my-6" />
 
               <div className="flex items-center justify-between pt-6 border-t border-slate-800 text-xs text-slate-400">
                 <span>Share this technical guide:</span>
@@ -406,9 +403,6 @@ export const ArticleView: React.FC<ArticleViewProps> = ({ articleId, onBack, onN
                 Tests were conducted over 500 standardized query passes using localized datasets, technical repository transcripts, and long-form financial regulatory documents ranging from 10,000 to 180,000 tokens.
               </p>
 
-              {/* In-Article AdSense Banner Slot */}
-              <AdSenseUnit slotId="article-mid-banner" format="horizontal" />
-
               <h2 className="text-xl font-bold text-white border-b border-slate-800 pb-2">2. Context Retention & Needle-in-a-Haystack Analysis</h2>
               <p>
                 Context length remains a critical bottleneck for knowledge workers summarizing lengthy PDF filings, API documentation, or customer research transcripts.
@@ -553,8 +547,6 @@ export const ArticleView: React.FC<ArticleViewProps> = ({ articleId, onBack, onN
                 <li><code>--cref &lt;image_url&gt;</code>: Character reference parameter maintaining character face consistency across multiple scene angles.</li>
               </ul>
 
-              <AdSenseUnit slotId="article-mid-banner-2" format="rectangle" />
-
               <h2 className="text-xl font-bold text-white border-b border-slate-800 pb-2">2. Inpainting & Outpainting Workflows</h2>
               <p>
                 Using <strong>Vary (Region)</strong> allows designers to modify localized portions of an image (e.g. swapping brand logos or adjusting clothing textures) without altering the background visual depth.
@@ -616,8 +608,6 @@ export const ArticleView: React.FC<ArticleViewProps> = ({ articleId, onBack, onN
               <p>
                 Code completion utilities must deliver predictions in under 300ms to maintain developer flow state. Tools like <strong>GitHub Copilot</strong> use localized tree-sitter AST parsing to construct contextual prompts from open tabs and imported package declarations.
               </p>
-
-              <AdSenseUnit slotId="article-bottom-banner" format="horizontal" />
 
               <h2 className="text-xl font-bold text-white border-b border-slate-800 pb-2">2. Security & Compliance Requirements</h2>
               <p>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Tag, Filter, Star, ArrowLeft } from 'lucide-react';
-import { INITIAL_TOOLS, TOOL_CATEGORIES, SUB_FILTERS } from '../data/thakaaData';
+import { ArrowLeft } from 'lucide-react';
+import { INITIAL_TOOLS } from '../data/thakaaData';
 import { ToolsGrid } from './ToolsGrid';
+import { CategoryHeader } from './CategoryHeader';
 import { findCategoryBySlug, getCategorySlug } from '../utils/slug';
 import { updateHeadSEO } from '../utils/seo';
 
@@ -21,7 +22,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({
   const [activeSubFilter, setActiveSubFilter] = useState('all');
 
   const catObj = categorySlug ? findCategoryBySlug(categorySlug) : undefined;
-  const categoryId = catObj ? catObj.id : 'all';
+  const categoryId = catObj ? catObj.id : (categorySlug === 'all' ? 'all' : 'writing');
 
   useEffect(() => {
     if (catObj) {
@@ -48,9 +49,9 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({
     });
   }, [categoryId, activeSubFilter, savedToolIds]);
 
-  if (!catObj && categorySlug !== 'all') {
+  if (!catObj && categorySlug && categorySlug !== 'all') {
     return (
-      <div className="container py-16 text-center" style={{ minHeight: '60vh' }}>
+      <div className="container py-24 text-center" style={{ minHeight: '60vh' }}>
         <h2 className="text-2xl font-bold mb-4">Category Not Found</h2>
         <p className="text-secondary mb-6">
           The requested tool category "<span className="text-primary">{categorySlug}</span>" does not exist.
@@ -65,69 +66,30 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({
     );
   }
 
-  const categoryName = catObj ? catObj.label : 'All Tools';
+  const categoryName = catObj ? catObj.label : 'Writing';
 
   return (
-    <div className="py-8">
+    <div className="min-h-screen bg-[#090d16]">
       {/* Category Header Banner */}
-      <div className="container mb-8">
-        <div className="bg-gradient-to-r from-primary/10 via-surface to-surface border border-border rounded-2xl p-6 md:p-8">
-          <nav className="flex items-center gap-2 text-xs text-secondary mb-4">
-            <Link to="/" className="hover:text-primary transition-colors">Home</Link>
-            <span>/</span>
-            <span className="text-primary font-medium">Category</span>
-            <span>/</span>
-            <span className="text-foreground capitalize">{categoryName}</span>
-          </nav>
-
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-3 rounded-xl bg-primary/10 text-primary">
-              <Tag className="w-6 h-6" />
-            </div>
-            <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-              {categoryName} AI Tools & Software
-            </h1>
-          </div>
-
-          <p className="text-secondary text-sm max-w-2xl mt-2">
-            Curated list of verified artificial intelligence software, developer utilities, and free alternatives for {categoryName.toLowerCase()}.
-          </p>
-
-          {/* Sub Filters */}
-          <div className="flex items-center gap-2 mt-6 flex-wrap">
-            <span className="text-xs text-secondary font-medium mr-1 flex items-center gap-1">
-              <Filter className="w-3.5 h-3.5" /> Filter:
-            </span>
-            {SUB_FILTERS.map((sub) => (
-              <button
-                key={sub.id}
-                onClick={() => setActiveSubFilter(sub.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  activeSubFilter === sub.id
-                    ? 'bg-primary text-primary-foreground shadow-sm'
-                    : 'bg-surface border border-border hover:border-primary text-secondary'
-                }`}
-              >
-                {sub.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Category Tools Count */}
-      <div className="container mb-4 flex items-center justify-between text-xs text-secondary">
-        <span>Showing <strong>{categoryTools.length}</strong> verified tools in {categoryName}</span>
-        <Link to="/" className="text-primary hover:underline">View All Categories →</Link>
-      </div>
-
-      {/* Tools Grid */}
-      <ToolsGrid
-        tools={categoryTools}
-        onShowDetails={onShowDetails}
-        savedToolIds={savedToolIds}
-        onToggleBookmark={onToggleBookmark}
+      <CategoryHeader
+        categoryName={categoryName}
+        categoryDescription={`Explore top-rated artificial intelligence software, AI copywriters, document processors, and language models verified for accuracy, speed, and workflow automation in ${categoryName.toLowerCase()}.`}
+        toolCount={categoryTools.length}
+        activeFilter={activeSubFilter}
+        onFilterChange={setActiveSubFilter}
+        savedCount={savedToolIds.length}
       />
+
+      {/* Tools Grid Section */}
+      <div className="py-8">
+        <ToolsGrid
+          tools={categoryTools}
+          onShowDetails={onShowDetails}
+          savedToolIds={savedToolIds}
+          onToggleBookmark={onToggleBookmark}
+        />
+      </div>
     </div>
   );
 };
+

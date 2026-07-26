@@ -15,7 +15,7 @@ export const Footer: React.FC<FooterProps> = () => {
         <div className="footer-inner">
           <Link to="/about" className="footer-brand flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28" fill="none" className="flex-shrink-0">
-              <rect x="2" y="4" width="28" height="7" rx="3.5" fill="#2563EB"/>
+              <rect x="2" y="4" width="28" height="7" rx="3.5" fill="#A855F7"/>
               <rect x="12" y="13" width="8" height="15" rx="3.5" fill="currentColor"/>
             </svg>
             <span className="font-bold text-lg tracking-tight">Thakaa AI</span>

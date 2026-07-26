@@ -13,6 +13,10 @@ export interface Tool {
   featured: boolean;
   tags: string[];
   url: string;
+  tagline?: string;
+  keyFeatures?: string[];
+  metaTitle?: string;
+  metaDescription?: string;
 }
 
 export interface ToolCategory {

@@ -174,9 +174,6 @@ export const ToolsGrid: React.FC<ToolsGridProps> = ({
                 );
               })}
             </div>
-
-            {/* AdSense Placement below directory tools grid */}
-            <AdSenseUnit slotId="directory-grid-banner" format="horizontal" className="max-w-4xl mx-auto my-8" />
           </>
         )}
       </div>

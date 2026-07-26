@@ -43,8 +43,8 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({
       const toolSlug = getToolSlug(tool);
       const jsonLd = generateToolJsonLd(tool);
       updateHeadSEO({
-        title: `${tool.name} Review, Pricing & Alternatives | Thakaa AI Directory`,
-        description: `In-depth technical breakdown of ${tool.name}. ${tool.desc} Compare pricing (${tool.price}), ratings, and top alternatives.`,
+        title: tool.metaTitle || `${tool.name} Review, Pricing & Alternatives | Thakaa AI Directory`,
+        description: tool.metaDescription || `In-depth technical breakdown of ${tool.name}. ${tool.desc} Compare pricing (${tool.price}), ratings, and top alternatives.`,
         canonicalUrl: `https://thakaa.ai/tools/${toolSlug}`,
         ogType: 'product',
         jsonLd
@@ -211,7 +211,12 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({
         </div>
 
         {/* Short Summary Banner */}
-        <div className="mt-6 pt-6 border-t border-border">
+        <div className="mt-6 pt-6 border-t border-border space-y-2">
+          {tool.tagline && (
+            <div className="text-xs font-bold uppercase tracking-wider text-primary">
+              ⚡ {tool.tagline}
+            </div>
+          )}
           <p className="text-base text-secondary leading-relaxed">
             {tool.desc}
           </p>
@@ -227,22 +232,33 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({
               <Zap className="w-5 h-5 text-primary" /> Key Features & Strengths
             </h2>
             <ul className="space-y-3 text-sm text-secondary">
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
-                <span><strong>Core Capabilities:</strong> Designed specifically for high-speed {tool.category} workflows with intelligent context processing.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
-                <span><strong>Pricing Model:</strong> Offers {tool.pricing} tier structure ({tool.price}).</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
-                <span><strong>Arabic Support:</strong> {tool.arabic === 'yes' ? 'Native Arabic support' : tool.arabic === 'partial' ? 'Partial Arabic support' : 'English / Global interface'}.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
-                <span><strong>Source Model:</strong> {tool.opensource ? 'Open-source code base' : 'Proprietary enterprise cloud engine'}.</span>
-              </li>
+              {tool.keyFeatures && tool.keyFeatures.length > 0 ? (
+                tool.keyFeatures.map((kf, i) => (
+                  <li key={i} className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <span>{kf}</span>
+                  </li>
+                ))
+              ) : (
+                <>
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <span><strong>Core Capabilities:</strong> Designed specifically for high-speed {tool.category} workflows with intelligent context processing.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <span><strong>Pricing Model:</strong> Offers {tool.pricing} tier structure ({tool.price}).</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <span><strong>Arabic Support:</strong> {tool.arabic === 'yes' ? 'Native Arabic support' : tool.arabic === 'partial' ? 'Partial Arabic support' : 'English / Global interface'}.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <span><strong>Source Model:</strong> {tool.opensource ? 'Open-source code base' : 'Proprietary enterprise cloud engine'}.</span>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 
