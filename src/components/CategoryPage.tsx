@@ -11,12 +11,18 @@ interface CategoryPageProps {
   savedToolIds: number[];
   onToggleBookmark: (toolId: number) => void;
   onShowDetails: (tool: any) => void;
+  selectedCompareToolIds?: number[];
+  onToggleCompareTool?: (toolId: number) => void;
+  onOpenInspection?: (tool: any) => void;
 }
 
 export const CategoryPage: React.FC<CategoryPageProps> = ({
   savedToolIds,
   onToggleBookmark,
-  onShowDetails
+  onShowDetails,
+  selectedCompareToolIds = [],
+  onToggleCompareTool,
+  onOpenInspection
 }) => {
   const { categorySlug } = useParams<{ categorySlug: string }>();
   const [activeSubFilter, setActiveSubFilter] = useState('all');
@@ -87,6 +93,9 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({
           onShowDetails={onShowDetails}
           savedToolIds={savedToolIds}
           onToggleBookmark={onToggleBookmark}
+          selectedCompareToolIds={selectedCompareToolIds}
+          onToggleCompareTool={onToggleCompareTool}
+          onOpenInspection={onOpenInspection}
         />
       </div>
     </div>

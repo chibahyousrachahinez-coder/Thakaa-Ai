@@ -1,24 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Bookmark, Star, ArrowUpRight, Search, Info } from 'lucide-react';
+import { Bookmark, Star, ArrowUpRight, Search, Info, Scale } from 'lucide-react';
 import { Tool } from '../types';
 import { Storage, showToast } from '../utils/storage';
 import { ToolLogo } from './ToolLogo';
 import { AdSenseUnit } from './AdSenseUnit';
 import { getToolSlug } from '../utils/slug';
+import { VerifiedBadge } from './VerificationInspection';
 
 interface ToolsGridProps {
   tools: Tool[];
   onShowDetails?: (tool: Tool) => void;
   savedToolIds?: number[];
   onToggleBookmark?: (toolId: number) => void;
+  selectedCompareToolIds?: number[];
+  onToggleCompareTool?: (toolId: number) => void;
+  onOpenInspection?: (tool: Tool) => void;
 }
 
 export const ToolsGrid: React.FC<ToolsGridProps> = ({
   tools,
   onShowDetails,
   savedToolIds: externalSavedToolIds,
-  onToggleBookmark: externalOnToggleBookmark
+  onToggleBookmark: externalOnToggleBookmark,
+  selectedCompareToolIds = [],
+  onToggleCompareTool,
+  onOpenInspection
 }) => {
   const navigate = useNavigate();
   const [internalSavedIds, setInternalSavedIds] = useState<number[]>(() => Storage.getSavedTools());
@@ -81,10 +88,14 @@ export const ToolsGrid: React.FC<ToolsGridProps> = ({
                 const priceClass = tool.pricing === 'free' ? 'free' : 'paid';
                 const toolSlug = getToolSlug(tool);
 
+                const isSelectedForCompare = selectedCompareToolIds.includes(tool.id);
+
                 return (
                   <div
                     key={tool.id}
-                    className="tool-card cursor-pointer hover:border-primary transition-all flex flex-col justify-between min-h-[160px] p-5 border rounded-xl bg-surface border-border shadow-sm"
+                    className={`tool-card cursor-pointer hover:border-primary transition-all flex flex-col justify-between min-h-[160px] p-5 border rounded-xl bg-surface border-border shadow-sm relative ${
+                      isSelectedForCompare ? 'ring-2 ring-purple-500/50 border-purple-500/50' : ''
+                    }`}
                     data-tool-id={tool.id}
                     onClick={() => navigate(`/tools/${toolSlug}`)}
                   >
@@ -95,16 +106,41 @@ export const ToolsGrid: React.FC<ToolsGridProps> = ({
                             Featured
                           </div>
                         ) : (
-                          <div />
+                          <VerifiedBadge
+                            tool={tool}
+                            size="sm"
+                            onClick={() => {
+                              if (onOpenInspection) onOpenInspection(tool);
+                            }}
+                          />
                         )}
-                        <button
-                          className={`bookmark-btn ${isBookmarked ? 'active' : ''}`}
-                          onClick={(e) => handleToggleBookmark(e, tool)}
-                          title={isBookmarked ? 'Remove bookmark' : 'Bookmark tool'}
-                          aria-label={`${isBookmarked ? 'Remove' : 'Save'} ${tool.name} to bookmarks`}
-                        >
-                          <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current text-primary' : ''}`} />
-                        </button>
+                        <div className="flex items-center gap-1">
+                          {onToggleCompareTool && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onToggleCompareTool(tool.id);
+                              }}
+                              className={`px-2 py-1 rounded-lg border text-[10px] font-bold transition-all flex items-center gap-1 cursor-pointer ${
+                                isSelectedForCompare
+                                  ? 'bg-purple-600/30 border-purple-500 text-purple-300'
+                                  : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                              }`}
+                              title={isSelectedForCompare ? 'Remove from Compare' : 'Add to Compare'}
+                            >
+                              <Scale className="w-3 h-3 text-purple-400" />
+                              <span>{isSelectedForCompare ? 'Comparing' : '+ Compare'}</span>
+                            </button>
+                          )}
+                          <button
+                            className={`bookmark-btn ${isBookmarked ? 'active' : ''}`}
+                            onClick={(e) => handleToggleBookmark(e, tool)}
+                            title={isBookmarked ? 'Remove bookmark' : 'Bookmark tool'}
+                            aria-label={`${isBookmarked ? 'Remove' : 'Save'} ${tool.name} to bookmarks`}
+                          >
+                            <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current text-primary' : ''}`} />
+                          </button>
+                        </div>
                       </div>
 
                       <div className="tool-header flex items-center gap-3 mb-3">

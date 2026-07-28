@@ -25,6 +25,8 @@ import { LegalPages } from './components/LegalPages';
 import { ToolDetailPage } from './components/ToolDetailPage';
 import { CategoryPage } from './components/CategoryPage';
 import { NicheStackPage } from './components/NicheStackPage';
+import { CompareBar, ComparisonMatrixModal } from './components/ComparisonMatrix';
+import { ToolInspectionModal, CuratedCriteriaModal } from './components/VerificationInspection';
 
 import { INITIAL_TOOLS, USER_REVIEWS } from './data/thakaaData';
 import { Tool } from './types';
@@ -53,6 +55,12 @@ export default function App() {
   const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
   const [isAdminPublishOpen, setIsAdminPublishOpen] = useState(false);
   const [customToolsVersion, setCustomToolsVersion] = useState(0);
+
+  // New features state
+  const [selectedCompareToolIds, setSelectedCompareToolIds] = useState<number[]>([]);
+  const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
+  const [isCuratedCriteriaOpen, setIsCuratedCriteriaOpen] = useState(false);
+  const [inspectedTool, setInspectedTool] = useState<Tool | null>(null);
 
   const [isPremiumUnlocked, setIsPremiumUnlocked] = useState(() => {
     return Storage.get<boolean>('premiumUnlocked', false);
@@ -227,6 +235,31 @@ export default function App() {
     );
   };
 
+  const handleToggleCompareTool = (toolId: number) => {
+    setSelectedCompareToolIds((prev) => {
+      if (prev.includes(toolId)) {
+        showToast('Removed tool from comparison matrix');
+        return prev.filter((id) => id !== toolId);
+      } else {
+        if (prev.length >= 3) {
+          showToast('Maximum of 3 tools can be compared side-by-side', 'error');
+          return prev;
+        }
+        const customTools = Storage.get<Tool[]>('customTools', []);
+        const allTools = [...customTools, ...INITIAL_TOOLS];
+        const found = allTools.find((t) => t.id === toolId);
+        showToast(`Added ${found ? found.name : 'tool'} to comparison bar`);
+        return [...prev, toolId];
+      }
+    });
+  };
+
+  const selectedCompareTools = useMemo(() => {
+    const customTools = Storage.get<Tool[]>('customTools', []);
+    const allTools = [...customTools, ...INITIAL_TOOLS];
+    return allTools.filter((t) => selectedCompareToolIds.includes(t.id));
+  }, [selectedCompareToolIds, customToolsVersion]);
+
   const handleNavigate = (sec: string) => {
     setActiveArticleId(null);
     if (sec === 'stackBuilder') {
@@ -389,6 +422,9 @@ export default function App() {
                     onShowDetails={(tool) => setSelectedToolDetail(tool)}
                     savedToolIds={savedToolIds}
                     onToggleBookmark={handleToggleBookmark}
+                    selectedCompareToolIds={selectedCompareToolIds}
+                    onToggleCompareTool={handleToggleCompareTool}
+                    onOpenInspection={(t) => setInspectedTool(t)}
                   />
 
                   {/* Monthly Highlight */}
@@ -490,6 +526,9 @@ export default function App() {
                 <ToolDetailPage
                   savedToolIds={savedToolIds}
                   onToggleBookmark={handleToggleBookmark}
+                  selectedCompareToolIds={selectedCompareToolIds}
+                  onToggleCompareTool={handleToggleCompareTool}
+                  onOpenCriteriaModal={() => setIsCuratedCriteriaOpen(true)}
                 />
               }
             />
@@ -502,6 +541,9 @@ export default function App() {
                   savedToolIds={savedToolIds}
                   onToggleBookmark={handleToggleBookmark}
                   onShowDetails={(t) => setSelectedToolDetail(t)}
+                  selectedCompareToolIds={selectedCompareToolIds}
+                  onToggleCompareTool={handleToggleCompareTool}
+                  onOpenInspection={(t) => setInspectedTool(t)}
                 />
               }
             />
@@ -615,6 +657,37 @@ export default function App() {
         onClose={() => setIsAdminPublishOpen(false)}
         onPublishSuccess={refreshCustomData}
       />
+
+      {/* Comparison Floating Action Bar */}
+      <CompareBar
+        selectedTools={selectedCompareTools}
+        onRemoveTool={handleToggleCompareTool}
+        onClearAll={() => setSelectedCompareToolIds([])}
+        onOpenCompareModal={() => setIsCompareModalOpen(true)}
+      />
+
+      {/* Side-by-Side Comparison Matrix Modal */}
+      {isCompareModalOpen && (
+        <ComparisonMatrixModal
+          tools={selectedCompareTools}
+          onClose={() => setIsCompareModalOpen(false)}
+          onRemoveTool={handleToggleCompareTool}
+        />
+      )}
+
+      {/* Global Curated Curation Criteria Modal */}
+      {isCuratedCriteriaOpen && (
+        <CuratedCriteriaModal onClose={() => setIsCuratedCriteriaOpen(false)} />
+      )}
+
+      {/* Global Tool Inspection Modal */}
+      {inspectedTool && (
+        <ToolInspectionModal
+          tool={inspectedTool}
+          onClose={() => setInspectedTool(null)}
+          onOpenCriteriaModal={() => setIsCuratedCriteriaOpen(true)}
+        />
+      )}
 
       {/* Footer */}
       <Footer

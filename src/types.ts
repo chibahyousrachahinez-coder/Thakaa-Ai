@@ -96,3 +96,43 @@ export interface RevenueStats {
   submissions: number;
   revenue: number;
 }
+
+export interface IToolReview {
+  id: string;
+  toolId: number;
+  userName: string;
+  userAvatar?: string;
+  userRole?: string;
+  rating: number; // 1 to 5
+  date: string;
+  reviewText: string;
+  helpfulCount: number;
+  userUpvoted?: boolean;
+  verifiedUser?: boolean;
+}
+
+export interface IVerificationMetrics {
+  qualityScore: number;
+  realUtilityScore: number;
+  pricingTransparencyScore: number;
+  activeMaintenanceStatus: 'Active & Verified' | 'Updated Recently' | 'Under Review';
+  lastTestedDate: string;
+  workingStatus: '100% Operational' | 'Partial Service' | 'Maintenance';
+  criteriaChecklist: {
+    title: string;
+    passed: boolean;
+    details: string;
+  }[];
+}
+
+export interface ICurationCriteria {
+  id: string;
+  title: string;
+  description: string;
+  iconName: string;
+  weight: string;
+}
+
+export interface IToolComparison {
+  selectedToolIds: number[];
+}

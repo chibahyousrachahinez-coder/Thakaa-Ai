@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -16,25 +16,35 @@ import {
   DollarSign,
   Cpu,
   Sparkles,
-  Layers
+  Layers,
+  Scale
 } from 'lucide-react';
 import { INITIAL_TOOLS } from '../data/thakaaData';
 import { ToolLogo } from './ToolLogo';
 import { findToolBySlug, getToolSlug, getCategorySlug } from '../utils/slug';
 import { updateHeadSEO, generateToolJsonLd } from '../utils/seo';
 import { Storage, showToast } from '../utils/storage';
+import { ToolReviewsSection } from './ReviewSystem';
+import { VerifiedBadge, ToolInspectionModal } from './VerificationInspection';
 
 interface ToolDetailPageProps {
   savedToolIds: number[];
   onToggleBookmark: (toolId: number) => void;
+  selectedCompareToolIds?: number[];
+  onToggleCompareTool?: (toolId: number) => void;
+  onOpenCriteriaModal?: () => void;
 }
 
 export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({
   savedToolIds,
-  onToggleBookmark
+  onToggleBookmark,
+  selectedCompareToolIds = [],
+  onToggleCompareTool,
+  onOpenCriteriaModal
 }) => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const [isInspectionOpen, setIsInspectionOpen] = useState(false);
 
   const tool = slug ? findToolBySlug(slug) : undefined;
 
@@ -141,9 +151,7 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({
             <div>
               <div className="flex items-center gap-2 flex-wrap mb-1">
                 <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">{tool.name}</h1>
-                <span className="inline-flex items-center gap-1 text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 font-medium border border-emerald-500/20">
-                  <ShieldCheck className="w-3.5 h-3.5" /> Verified
-                </span>
+                <VerifiedBadge tool={tool} onClick={() => setIsInspectionOpen(true)} />
                 {tool.featured && (
                   <span className="inline-flex items-center gap-1 text-xs px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 font-medium border border-amber-500/20">
                     <Sparkles className="w-3.5 h-3.5" /> Featured
@@ -173,6 +181,21 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({
 
           {/* CTAs */}
           <div className="flex items-center gap-2 flex-wrap md:flex-nowrap">
+            {onToggleCompareTool && (
+              <button
+                onClick={() => onToggleCompareTool(tool.id)}
+                className={`px-3.5 py-2.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                  selectedCompareToolIds.includes(tool.id)
+                    ? 'bg-purple-600/20 border-purple-500 text-purple-300'
+                    : 'bg-surface border-border hover:border-primary text-secondary'
+                }`}
+                title={selectedCompareToolIds.includes(tool.id) ? 'Remove from Compare' : 'Add to Compare Matrix'}
+              >
+                <Scale className="w-4 h-4 text-purple-400" />
+                <span>{selectedCompareToolIds.includes(tool.id) ? 'Comparing' : '+ Compare'}</span>
+              </button>
+            )}
+
             <button
               onClick={() => onToggleBookmark(tool.id)}
               className={`p-2.5 rounded-xl border transition-all ${
@@ -403,15 +426,33 @@ export const ToolDetailPage: React.FC<ToolDetailPageProps> = ({
 
             <div className="mt-6 pt-4 border-t border-border">
               <button
-                onClick={() => navigate('/comparisons')}
-                className="w-full py-2.5 rounded-xl bg-muted hover:bg-muted/80 text-foreground text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
+                onClick={() => {
+                  if (onToggleCompareTool) onToggleCompareTool(tool.id);
+                  navigate('/');
+                }}
+                className="w-full py-2.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
               >
-                Compare {tool.name} Side-by-Side
+                <Scale className="w-4 h-4" /> Compare {tool.name} Side-by-Side
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Community Reviews & Ratings Section */}
+      <div className="mt-12">
+        <ToolReviewsSection toolId={tool.id} toolName={tool.name} initialRating={tool.rating} />
+      </div>
+
+      {/* QA Inspection Modal */}
+      {isInspectionOpen && (
+        <ToolInspectionModal
+          tool={tool}
+          onClose={() => setIsInspectionOpen(false)}
+          onOpenCriteriaModal={onOpenCriteriaModal}
+        />
+      )}
     </div>
   );
 };
+
